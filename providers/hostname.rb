@@ -33,6 +33,7 @@ action :set do
     hostname fqdn
     aliases [new_resource.short_hostname]
     unique true
+    not_if { platform_family?('debian') }
   end
 
   # http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution
@@ -118,7 +119,7 @@ action :set do
     owner 'root'
     group 'root'
     mode 0755
-    content new_resource.short_hostname
+    content platform_family?('debian') ? new_resource.short_hostname : fqdn
     action :create
     notifies :start, resources("service[#{service_name}]"), :immediately if platform?('debian')
     notifies :restart, resources("service[#{service_name}]"), :immediately if platform?('ubuntu')
