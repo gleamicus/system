@@ -118,7 +118,7 @@ action :set do
     owner 'root'
     group 'root'
     mode 0755
-    content fqdn
+    content new_resource.short_hostname
     action :create
     notifies :start, resources("service[#{service_name}]"), :immediately if platform?('debian')
     notifies :restart, resources("service[#{service_name}]"), :immediately if platform?('ubuntu')
