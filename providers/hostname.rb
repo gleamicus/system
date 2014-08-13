@@ -42,7 +42,6 @@ action :set do
     aliases [new_resource.short_hostname]
     unique true
     only_if { platform_family?('debian') }
-    not_if { GetIP.local }
   end
 
   # https://tickets.opscode.com/browse/OHAI-389
